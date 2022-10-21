@@ -5,7 +5,7 @@ services:
     build: .
     labels:
       - traefik.enable=true
-      - traefik.http.routers.colorgen.rule=Host(`colorgen.devminer.xyz`)
+      - traefik.http.routers.colorgen.rule=Host(`c.devminer.xyz`)
       - traefik.http.routers.colorgen.entrypoints=websecure
       - traefik.http.services.colorgen-service.loadbalancer.server.port=3000
     networks:
