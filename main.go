@@ -101,6 +101,7 @@ func main() {
 			return c.SendStatus(500)
 		}
 
+		c.Set("Content-Disposition", "inline")
 		return c.Type("image/png").SendStream(b)
 	})
 
@@ -133,6 +134,7 @@ func main() {
 			return c.SendStatus(500)
 		}
 
+		c.Set("Content-Disposition", "inline")
 		return c.Type("image/png").SendStream(buf)
 	})
 
@@ -169,6 +171,7 @@ func main() {
 			return c.SendStatus(500)
 		}
 
+		c.Set("Content-Disposition", "inline")
 		return c.Type("image/png").SendStream(buf)
 	})
 
