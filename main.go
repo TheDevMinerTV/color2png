@@ -96,13 +96,14 @@ func main() {
 			return err
 		}
 
-		b := bytes.NewBuffer([]byte{})
-		if err := png.Encode(b, createSolidImage(w, h, rgba)); err != nil {
+		buf := bytes.NewBuffer([]byte{})
+		if err := png.Encode(buf, createSolidImage(w, h, rgba)); err != nil {
 			return c.SendStatus(500)
 		}
 
 		c.Set("Content-Disposition", "inline")
-		return c.Type("image/png").SendStream(b)
+		c.Set("Content-Type", "image/png")
+		return c.SendStream(buf)
 	})
 
 	app.Get("/:w/:h/rgb/:r/:g/:b", func(c *fiber.Ctx) error {
@@ -135,7 +136,8 @@ func main() {
 		}
 
 		c.Set("Content-Disposition", "inline")
-		return c.Type("image/png").SendStream(buf)
+		c.Set("Content-Type", "image/png")
+		return c.SendStream(buf)
 	})
 
 	app.Get("/:w/:h/rgba/:r/:g/:b/:a", func(c *fiber.Ctx) error {
@@ -172,7 +174,8 @@ func main() {
 		}
 
 		c.Set("Content-Disposition", "inline")
-		return c.Type("image/png").SendStream(buf)
+		c.Set("Content-Type", "image/png")
+		return c.SendStream(buf)
 	})
 
 	app.Listen(":3000")
