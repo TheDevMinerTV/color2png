@@ -104,5 +104,13 @@ func main() {
 		return c.SendStream(buf)
 	})
 
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString(
+			"/<w>/<h>/hex/<hex>\n" +
+				"/<w>/<h>/rgb/<r>/<g>/<b>\n" +
+				"/<w>/<h>/rgba/<r>/<g>/<b>/<a>",
+		)
+	})
+
 	app.Listen(":3000")
 }
