@@ -101,7 +101,7 @@ func main() {
 			return c.SendStatus(500)
 		}
 
-		return c.SendStream(b)
+		return c.Type("image/png").SendStream(b)
 	})
 
 	app.Get("/:w/:h/rgb/:r/:g/:b", func(c *fiber.Ctx) error {
@@ -133,7 +133,7 @@ func main() {
 			return c.SendStatus(500)
 		}
 
-		return c.SendStream(buf)
+		return c.Type("image/png").SendStream(buf)
 	})
 
 	app.Get("/:w/:h/rgba/:r/:g/:b/:a", func(c *fiber.Ctx) error {
@@ -169,7 +169,7 @@ func main() {
 			return c.SendStatus(500)
 		}
 
-		return c.SendStream(buf)
+		return c.Type("image/png").SendStream(buf)
 	})
 
 	app.Listen(":3000")
