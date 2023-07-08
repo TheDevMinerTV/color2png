@@ -2,10 +2,10 @@ package main
 
 import (
 	"bytes"
-	"image/color"
 	"image/png"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/mazznoer/colorgrad"
 )
 
 func main() {
@@ -32,32 +32,75 @@ func main() {
 		return c.SendStream(buf)
 	})
 
+	app.Get("/:w/:h/hex/:hex/:hex2", func(c *fiber.Ctx) error {
+		w, h, err := getWH(c)
+		if err != nil {
+			return err
+		}
+
+		grad, err := colorgrad.NewGradient().
+			HtmlColors(c.Params("hex"), c.Params("hex2")).
+			Build()
+		if err != nil {
+			return err
+		}
+
+		buf := bytes.NewBuffer([]byte{})
+		if err := png.Encode(buf, createGradientImage(w, h, grad)); err != nil {
+			return c.SendStatus(500)
+		}
+
+		c.Set("Content-Disposition", "inline")
+		c.Set("Content-Type", "image/png")
+		return c.SendStream(buf)
+	})
+
+	app.Get("/:w/:h/rgb/:r/:g/:b/:r2/:g2/:b2", func(c *fiber.Ctx) error {
+		w, h, err := getWH(c)
+		if err != nil {
+			return err
+		}
+
+		rgb1, err := parseRGB(c, "r", "g", "b")
+		if err != nil {
+			return err
+		}
+
+		rgb2, err := parseRGB(c, "r2", "g2", "b2")
+		if err != nil {
+			return err
+		}
+
+		grad, err := colorgrad.NewGradient().
+			Colors(*rgb1, *rgb2).
+			Build()
+		if err != nil {
+			return err
+		}
+
+		buf := bytes.NewBuffer([]byte{})
+		if err := png.Encode(buf, createGradientImage(w, h, grad)); err != nil {
+			return c.SendStatus(500)
+		}
+
+		c.Set("Content-Disposition", "inline")
+		c.Set("Content-Type", "image/png")
+		return c.SendStream(buf)
+	})
+
 	app.Get("/:w/:h/rgb/:r/:g/:b", func(c *fiber.Ctx) error {
 		w, h, err := getWH(c)
 		if err != nil {
 			return err
 		}
 
-		r, err := getUint8Param(c, "r")
-		if err != nil {
-			return err
-		}
-		g, err := getUint8Param(c, "g")
-		if err != nil {
-			return err
-		}
-		b, err := getUint8Param(c, "b")
+		rgba, err := parseRGB(c, "r", "g", "b")
 		if err != nil {
 			return err
 		}
 
 		buf := bytes.NewBuffer([]byte{})
-		if err := png.Encode(buf, createSolidImage(w, h, color.RGBA{
-			R: r,
-			G: g,
-			B: b,
-			A: 255,
-		})); err != nil {
+		if err := png.Encode(buf, createSolidImage(w, h, *rgba)); err != nil {
 			return c.SendStatus(500)
 		}
 
@@ -72,30 +115,46 @@ func main() {
 			return err
 		}
 
-		r, err := getUint8Param(c, "r")
-		if err != nil {
-			return err
-		}
-		g, err := getUint8Param(c, "g")
-		if err != nil {
-			return err
-		}
-		b, err := getUint8Param(c, "b")
-		if err != nil {
-			return err
-		}
-		a, err := getUint8Param(c, "a")
+		rgba, err := parseRGBA(c, "r", "g", "b", "a")
 		if err != nil {
 			return err
 		}
 
 		buf := bytes.NewBuffer([]byte{})
-		if err := png.Encode(buf, createSolidImage(w, h, color.RGBA{
-			R: r,
-			G: g,
-			B: b,
-			A: a,
-		})); err != nil {
+		if err := png.Encode(buf, createSolidImage(w, h, *rgba)); err != nil {
+			return c.SendStatus(500)
+		}
+
+		c.Set("Content-Disposition", "inline")
+		c.Set("Content-Type", "image/png")
+		return c.SendStream(buf)
+	})
+
+	app.Get("/:w/:h/rgba/:r/:g/:b/:a/:r2/:g2/:b2/:a2", func(c *fiber.Ctx) error {
+		w, h, err := getWH(c)
+		if err != nil {
+			return err
+		}
+
+		rgba1, err := parseRGBA(c, "r", "g", "b", "a")
+		if err != nil {
+			return err
+		}
+
+		rgba2, err := parseRGBA(c, "r2", "g2", "b2", "a2")
+		if err != nil {
+			return err
+		}
+
+		grad, err := colorgrad.NewGradient().
+			Colors(*rgba1, *rgba2).
+			Build()
+		if err != nil {
+			return err
+		}
+
+		buf := bytes.NewBuffer([]byte{})
+		if err := png.Encode(buf, createGradientImage(w, h, grad)); err != nil {
 			return c.SendStatus(500)
 		}
 
@@ -106,9 +165,12 @@ func main() {
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString(
-			"/<w>/<h>/hex/<hex>\n" +
-				"/<w>/<h>/rgb/<r>/<g>/<b>\n" +
-				"/<w>/<h>/rgba/<r>/<g>/<b>/<a>",
+			"/<w>/<h>/hex/<hex> - generate a solid color\n" +
+				"/<w>/<h>/hex/<hex>/<hex> - generate a color gradient\n" +
+				"/<w>/<h>/rgb/<r>/<g>/<b> - generate a solid color\n" +
+				"/<w>/<h>/rgb/<r>/<g>/<b>/<r2>/<g2>/<b2> - generate a color gradient\n" +
+				"/<w>/<h>/rgba/<r>/<g>/<b>/<a> - generate a solid color\n" +
+				"/<w>/<h>/rgba/<r>/<g>/<b>/<a>/<r2>/<g2>/<b2>/<a2> - generate a color gradient\n",
 		)
 	})
 

@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/mazznoer/colorgrad"
 )
 
 var errInvalidDimension = errors.New("invalid dimensions")
@@ -48,6 +49,42 @@ func parseHexColor(s string) (c color.RGBA, err error) {
 	default:
 		return color.RGBA{}, fmt.Errorf("invalid length, must be 8, 6, 4 or 3")
 	}
+}
+
+func parseRGB(c *fiber.Ctx, r, g, b string) (*color.RGBA, error) {
+	rgb := &color.RGBA{}
+	var err error
+
+	rgb.R, err = getUint8Param(c, r)
+	if err != nil {
+		return rgb, err
+	}
+
+	rgb.G, err = getUint8Param(c, g)
+	if err != nil {
+		return rgb, err
+	}
+
+	rgb.G, err = getUint8Param(c, b)
+	if err != nil {
+		return rgb, err
+	}
+
+	return rgb, nil
+}
+
+func parseRGBA(c *fiber.Ctx, r, g, b, a string) (*color.RGBA, error) {
+	rgb, err := parseRGB(c, r, g, b)
+	if err != nil {
+		return rgb, err
+	}
+
+	rgb.A, err = getUint8Param(c, a)
+	if err != nil {
+		return rgb, err
+	}
+
+	return rgb, nil
 }
 
 func getUint8Param(c *fiber.Ctx, param string) (uint8, error) {
@@ -95,6 +132,20 @@ func createSolidImage(w, h int, c color.RGBA) image.Image {
 	i := image.NewRGBA(image.Rect(0, 0, w, h))
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
+			i.Set(x, y, c)
+		}
+	}
+
+	return i
+}
+
+func createGradientImage(w, h int, grad colorgrad.Gradient) image.Image {
+	i := image.NewRGBA(image.Rect(0, 0, w, h))
+
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			c := grad.At(float64(x) / float64(w))
+
 			i.Set(x, y, c)
 		}
 	}
