@@ -65,10 +65,12 @@ func parseRGB(c *fiber.Ctx, r, g, b string) (*color.RGBA, error) {
 		return rgb, err
 	}
 
-	rgb.G, err = getUint8Param(c, b)
+	rgb.B, err = getUint8Param(c, b)
 	if err != nil {
 		return rgb, err
 	}
+
+	rgb.A = 255
 
 	return rgb, nil
 }
