@@ -2,10 +2,9 @@ package main
 
 import (
 	"bytes"
-	"image/png"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/mazznoer/colorgrad"
+	"image/png"
 )
 
 func main() {
@@ -38,8 +37,18 @@ func main() {
 			return err
 		}
 
+		hex, err := parseHexColor(c.Params("hex"))
+		if err != nil {
+			return err
+		}
+
+		hex2, err := parseHexColor(c.Params("hex2"))
+		if err != nil {
+			return err
+		}
+
 		grad, err := colorgrad.NewGradient().
-			HtmlColors(c.Params("hex"), c.Params("hex2")).
+			Colors(hex, hex2).
 			Build()
 		if err != nil {
 			return err

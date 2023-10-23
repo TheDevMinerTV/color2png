@@ -47,7 +47,7 @@ func parseHexColor(s string) (c color.RGBA, err error) {
 		return c, nil
 
 	default:
-		return color.RGBA{}, fmt.Errorf("invalid length, must be 8, 6, 4 or 3")
+		return color.RGBA{}, fmt.Errorf("invalid length, must be 8, 6, 4 or 3, got %d", len(s))
 	}
 }
 
