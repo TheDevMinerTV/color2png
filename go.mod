@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/mazznoer/colorgrad v0.9.1
-	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc
+	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 )
 
 require (
