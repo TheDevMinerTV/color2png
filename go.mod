@@ -1,11 +1,13 @@
 module devminer.xyz/c
 
-go 1.19
+go 1.22.0
+
+toolchain go1.23.3
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/mazznoer/colorgrad v0.9.1
-	golang.org/x/exp v0.0.0-20240716175740-e3f259677ff7
+	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f
 )
 
 require (
