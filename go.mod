@@ -2,7 +2,7 @@ module devminer.xyz/c
 
 go 1.22.0
 
-toolchain go1.23.3
+toolchain go1.24.3
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.5
