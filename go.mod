@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.24.3
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/gofiber/fiber/v2 v2.52.8
 	github.com/mazznoer/colorgrad v0.10.0
 	golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6
 )
