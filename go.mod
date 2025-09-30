@@ -1,8 +1,6 @@
 module devminer.xyz/c
 
-go 1.24.0
-
-toolchain go1.25.1
+go 1.25.1
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.9
@@ -20,6 +18,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mazznoer/csscolorparser v0.1.5 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/thedevminertv/ral-go v0.0.0-20250930184747-bacb031ff3cd // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
