@@ -5,7 +5,8 @@ go 1.25.1
 require (
 	github.com/gofiber/fiber/v2 v2.52.9
 	github.com/mazznoer/colorgrad v0.10.0
-	golang.org/x/exp v0.0.0-20250911091902-df9299821621
+	github.com/thedevminertv/ral-go v0.0.0-20250930184747-bacb031ff3cd
+	golang.org/x/exp v0.0.0-20251009144603-d2f985daa21b
 )
 
 require (
@@ -18,7 +19,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mazznoer/csscolorparser v0.1.5 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/thedevminertv/ral-go v0.0.0-20250930184747-bacb031ff3cd // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
