@@ -6,7 +6,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.52.9
 	github.com/mazznoer/colorgrad v0.10.0
 	github.com/thedevminertv/ral-go v0.0.0-20250930184747-bacb031ff3cd
-	golang.org/x/exp v0.0.0-20251009144603-d2f985daa21b
+	golang.org/x/exp v0.0.0-20251023183803-a4bb9ffd2546
 )
 
 require (
