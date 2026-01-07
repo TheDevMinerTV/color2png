@@ -5,7 +5,7 @@ COPY . /build
 
 RUN CGO=0 GOOS=linux GOARCH=amd64 go build -o /colorgen
 
-FROM alpine:3.22 AS runner
+FROM alpine:3.23 AS runner
 WORKDIR /data
 
 COPY --from=builder /colorgen /bin/colorgen
