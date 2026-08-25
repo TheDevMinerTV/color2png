@@ -1,12 +1,12 @@
 module devminer.xyz/c
 
-go 1.25.1
+go 1.26.0
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.9
 	github.com/mazznoer/colorgrad v0.11.0
 	github.com/thedevminertv/ral-go v0.0.0-20250930184747-bacb031ff3cd
-	golang.org/x/exp v0.0.0-20251219203646-944ab1f22d93
+	golang.org/x/exp v0.0.0-20260824195058-e88cd73687aa
 )
 
 require (
